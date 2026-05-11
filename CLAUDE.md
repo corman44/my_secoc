@@ -22,6 +22,35 @@ sudo ip link add dev vcan0 type vcan
 sudo ip link set up vcan0
 ```
 
+## Git Workflow
+
+  ### Branching
+  - Base branches off `main`
+  - Naming: `<type>/<short-description>` (e.g. `feat/secoc-receiver`, `fix/mac-truncation`)
+  - Types: `feat`, `fix`, `refactor`, `docs`, `test`, `chore`
+
+  ### Commits
+  - Style: conventional commits — `type(scope): message` (e.g. `feat(crypto): add CMAC verification`)
+  - Keep commits atomic 
+
+  ### Pull Requests
+  - Target: `main`
+  - Title follows commit style
+  - Require a description summarizing what changed and why
+  - Merge commit preferred 
+  - Always ask before pushing
+
+  ### What I should not do
+  - Never force-push to `main`
+  - Always confirm before pushing to remote
+
+  Adjust the specifics to match your actual preferences. The key things worth documenting are:
+
+  1. Branch naming pattern — so I generate correct branch names
+  2. Commit message style — conventional commits vs. free-form
+  3. Merge strategy — squash, merge commit, or rebase
+  4. Confirmation expectations — e.g. "always ask before pushing"
+
 ### Python Dependencies
 
 ```bash
