@@ -6,27 +6,24 @@ from Crypto.Cipher import AES
 
 def cmac_gen(payload, ffv, key):
     # ensure payload is <= 60 bytes
+    if len(payload) > 60:
+        print(f"Payload too long {len(payload)}") 
 
     # pad end until 60bytes payload reached
 
     # combine payload and ffv
-    combined = payload + ffv
+    combined = payload + bytes(ffv)
 
     cmac = CMAC.new(key, ciphermod=AES)
     cmac.update(combined)
 
-    return cmac.hexdigest()
+    return cmac.digest()
 
 def trunc_cmac_gen(payload, ffv, key):
     cmac = cmac_gen(payload, ffv, key)
 
     # truncate least sig 24-bits from cmac 32
-    print(f"CMAC: {cmac}")
-    last4 = bytes(cmac[-4:], encoding='utf-8')
-    print(f"last4: {last4.decode('utf-8')}")
-    
-    trunc_cmac = 0
-    for i in range(4):
-        trunc_cmac |= last4[-i] << i-1
+    # print(f"CMAC: {cmac}")
+    trunc_cmac = int.from_bytes(cmac[-3:], 'big')
 
-    print(trunc_cmac)
+    return trunc_cmac

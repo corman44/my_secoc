@@ -4,15 +4,13 @@ from secoc import fvm,crypto
 
 class TestCMAC(unittest.TestCase):
     def test_cmac_gen(self):
-        known_cmac = []
+        known_cmac = 0x00
         msg = bytes([0,1,2,3])
         key = bytes(range(16))
-        #cmac = crypto.cmac_gen(msg,b"0",key)
-        cmac = crypto.trunc_cmac_gen(msg,b'0',key)
+        cmac = crypto.trunc_cmac_gen(msg,0x00,key)
 
-        print(f"CMAC: {cmac}")
-
-        # self.assertEqual(cmac, known_cmac)
+        print(f"Generated Trunc_CMAC: {cmac}")
+        self.assertEqual(cmac, 3899428)
 
 if __name__ == "__main__":
     unittest.main()
