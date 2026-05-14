@@ -8,6 +8,7 @@ class FVM:
         self.last_count = {} # dict of all previous full_fvs based on msg_id
         # create thread for 'increment'ing
         self.thread = threading.Thread(target=self._increment, daemon=True)
+        self.thread.start()
 
     def _increment(self):
         # internal method for incrementing counters
@@ -22,5 +23,12 @@ class FVM:
         self.last_count[rx_msg_id] = self.counters[rx_msg_id]
         
         # update counter
-        self.counters[rx_msg_id] = rx_tfv + (self.counter[rx_msg_id] & 4278190080) # 
+        self.counters[rx_msg_id] = rx_tfv + (self.counters[rx_msg_id] & 4278190080) # 
         pass
+
+    def add_msg(self, msg_id):
+        self.counters[msg_id] = 0
+
+    def get_counter(self, rx_msg_id):
+        # TODO error handle if rx_msg_id not existing
+        return self.counters[rx_msg_id]
