@@ -12,7 +12,7 @@ def cmac_gen(payload, ffv, key):
     # pad end until 60bytes payload reached
 
     # combine payload and ffv
-    combined = payload + bytes(ffv)
+    combined = bytes(payload) + bytes(ffv)
 
     cmac = CMAC.new(key, ciphermod=AES)
     cmac.update(combined)
@@ -20,7 +20,7 @@ def cmac_gen(payload, ffv, key):
     return cmac.digest()
 
 def trunc_cmac_gen(payload, ffv, key):
-    cmac = cmac_gen(payload, ffv, key)
+    cmac = cmac_gen(payload, ffv, bytes(key))
 
     # truncate least sig 24-bits from cmac 32
     # print(f"CMAC: {cmac}")

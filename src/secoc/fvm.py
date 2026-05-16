@@ -19,11 +19,15 @@ class FVM:
                 self.counters[msg_id] += 1
 
     def sync_counter(self, rx_msg_id, rx_tfv):
+        # TODO check if rx_msg_id exists or not (if not added it in)
+
+        # TODO check that tfv and last_tfv are not too far off
+
         # set last count value
         self.last_count[rx_msg_id] = self.counters[rx_msg_id]
         
         # update counter
-        self.counters[rx_msg_id] = rx_tfv + (self.counters[rx_msg_id] & 4278190080) # 
+        self.counters[rx_msg_id] = rx_tfv # 
         pass
 
     def add_msg(self, msg_id):
